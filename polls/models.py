@@ -1,9 +1,8 @@
-from datetime import datetime,timedelta
-
+from datetime import datetime, timedelta
 
 from django.db import models
 from django.utils import timezone
-
+from django.contrib import admin
 
 # Create your models here.
 class Question(models.Model):
@@ -13,8 +12,16 @@ class Question(models.Model):
     def __str__(self):
         return self.question_text
 
+    @admin.display(
+        boolean=True,
+        ordering="pub_date",
+        description="Published Recently?",
+    )
+
+
     def was_published_recently(self):
-        return self.pub_date >= timezone.now() - timedelta(1)
+        now = timezone.now()
+        return now - timedelta(days=1) <= self.pub_date <= now
 
 
 class Choice(models.Model):
