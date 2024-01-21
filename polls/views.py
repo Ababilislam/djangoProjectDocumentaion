@@ -21,7 +21,6 @@ class IndexView(generic.ListView):
 
 class DetailView(generic.DetailView):
     model = Question
-    template_name = "polls/detail.html"
 
     def get_queryset(self):
         """exclude and question that aren't published yet."""
@@ -42,7 +41,8 @@ def vote(request, question_id):
         return render(
             request,
             "polls/detail.html",
-            {"question": question, "error_message": "You didn't select a choice.",
+            {"question": question,
+             "error_message": "You didn't select a choice.",
              },
         )
     else:
